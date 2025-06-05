@@ -11,7 +11,7 @@ last_item = {"id": None, "name": "", "price": 0}
 ITEMS = {
     "veg burger": {"id": 1, "name": "Veg Burger", "price": 80},
     "paneer pizza": {"id": 2, "name": "Paneer Pizza", "price": 120},
-    "fries": {"id": 3, "name": "Fries", "price": 50}
+    "french fries": {"id": 3, "name": "Fries", "price": 50}
 }
 
 def recognize_loop():
