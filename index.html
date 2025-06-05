@@ -1,33 +1,90 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Voice Item Loader</title>
+  <title>Voice Item Kiosk</title>
   <style>
-    body { font-family: Arial; padding: 20px; }
-    .item { border: 1px solid #ccc; padding: 10px; margin-top: 10px; border-radius: 6px; }
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      background: #f7f7f7;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .item {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 15px;
+      transition: transform 0.2s;
+    }
+
+    .item:hover {
+      transform: translateY(-5px);
+    }
+
+    .item img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .item h3 {
+      margin-top: 10px;
+    }
+
+    .price {
+      font-weight: bold;
+      color: green;
+      margin-bottom: 10px;
+    }
+
+    ul {
+      padding-left: 20px;
+      margin: 0;
+    }
   </style>
 </head>
 <body>
-  <h2>Voice-Controlled Kiosk</h2>
-  <div id="items"></div>
+  <h2>🎤 Voice-Controlled Food Kiosk</h2>
+  <div class="grid" id="items"></div>
 
   <script>
     const shownIds = new Set();
 
     async function fetchItem() {
-      const res = await fetch('http://localhost:5000/latest_item');
-      const data = await res.json();
+      try {
+        const res = await fetch('http://localhost:5000/latest_item');
+        const data = await res.json();
 
-      if (data.id && !shownIds.has(data.id)) {
-        const div = document.createElement('div');
-        div.className = 'item';
-        div.innerHTML = `<h3>${data.name}</h3><p>₹${data.price}</p>`;
-        document.getElementById("items").appendChild(div);
-        shownIds.add(data.id);
+        if (data.id && !shownIds.has(data.id)) {
+          const div = document.createElement('div');
+          div.className = 'item';
+          div.innerHTML = `
+            <img src="${data.image}" alt="${data.name}">
+            <h3>${data.name}</h3>
+            <div class="price">₹${data.price}</div>
+            <div><strong>Ingredients:</strong></div>
+            <ul>${data.ingredients.map(ing => `<li>${ing}</li>`).join('')}</ul>
+          `;
+          document.getElementById("items").appendChild(div);
+          shownIds.add(data.id);
+        }
+      } catch (error) {
+        console.error("Failed to fetch item:", error);
       }
     }
 
-    setInterval(fetchItem, 3000); // poll every 3s
+    setInterval(fetchItem, 3000); // Poll every 3s
   </script>
 </body>
 </html>
