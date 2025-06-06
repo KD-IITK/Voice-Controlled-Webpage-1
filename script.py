@@ -13,24 +13,39 @@ ITEMS = {
         "id": 1,
         "name": "Veg Burger",
         "price": 80,
-        "image": "https://i.imgur.com/3ZQ3ZVv.png",
-        "ingredients": ["Lettuce", "Tomato", "Patty", "Bun", "Sauce"]
+        "image": "https://cdn.pixabay.com/photo/2016/03/05/19/02/hamburger-1238246_960_720.jpg",
+        "ingredients": ["Bun", "Patty", "Lettuce", "Tomato", "Sauce"]
     },
     "paneer pizza": {
         "id": 2,
         "name": "Paneer Pizza",
         "price": 120,
-        "image": "https://i.imgur.com/6eZ3OQK.png",
-        "ingredients": ["Paneer", "Cheese", "Tomato", "Capsicum", "Oregano"]
+        "image": "https://cdn.pixabay.com/photo/2020/05/01/16/43/pizza-5117684_960_720.jpg",
+        "ingredients": ["Cheese", "Paneer", "Sauce", "Capsicum"]
     },
     "french fries": {
         "id": 3,
         "name": "Fries",
         "price": 50,
-        "image": "https://i.imgur.com/C1vZqkJ.png",
+        "image": "https://cdn.pixabay.com/photo/2014/04/22/02/56/fries-329523_960_720.jpg",
+        "ingredients": ["Potatoes", "Salt", "Oil"]
+    },
+    "pepsi": {
+        "id": 4,
+        "name": "pepsi",
+        "price": 50,
+        "image": "https://cdn.pixabay.com/photo/2014/04/22/02/56/pepsi-329523_960_720.jpg",
+        "ingredients": ["Potatoes", "Salt", "Oil"]
+    },
+    "pasta": {
+        "id": 5,
+        "name": "pasta",
+        "price": 50,
+        "image": "https://cdn.pixabay.com/photo/2014/04/22/02/56/pasta-329523_960_720.jpg",
         "ingredients": ["Potatoes", "Salt", "Oil"]
     }
 }
+
 
 
 def recognize_loop():
