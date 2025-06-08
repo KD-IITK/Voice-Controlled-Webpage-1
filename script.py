@@ -20,7 +20,7 @@ ITEMS = {
         "id": 2,
         "name": "Paneer Pizza",
         "price": 120,
-        "image": "https://cdn.pixabay.com/photo/2020/05/01/16/43/pizza-5117684_960_720.jpg",
+        "image": "https://foodoncall.co.in/wp-content/uploads/2017/10/chatpata-paneer-pizza.jpg",
         "ingredients": ["Cheese", "Paneer", "Sauce", "Capsicum"]
     },
     "french fries": {
@@ -34,14 +34,14 @@ ITEMS = {
         "id": 4,
         "name": "pepsi",
         "price": 50,
-        "image": "https://cdn.pixabay.com/photo/2014/04/22/02/56/pepsi-329523_960_720.jpg",
+        "image": "https://media.istockphoto.com/id/487787092/photo/can-and-glass-of-pepsi-cola.jpg?s=612x612&w=0&k=20&c=4Lqp4y8xCIF4IrV2a6DGkNhreCUwEAVfv3mEgb9aUJY=",
         "ingredients": ["Potatoes", "Salt", "Oil"]
     },
     "pasta": {
         "id": 5,
         "name": "pasta",
         "price": 50,
-        "image": "https://cdn.pixabay.com/photo/2014/04/22/02/56/pasta-329523_960_720.jpg",
+        "image": "https://img.freepik.com/free-photo/penne-pasta-tomato-sauce-with-chicken-tomatoes-wooden-table_2829-19739.jpg?semt=ais_hybrid&w=740",
         "ingredients": ["Potatoes", "Salt", "Oil"]
     }
 }

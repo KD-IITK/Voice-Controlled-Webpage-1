@@ -28,8 +28,7 @@
             <div class="content-wrapper">
               <h3>${data.name}</h3>
               <div class="price">₹${data.price}</div>
-              <div><strong>Ingredients:</strong></div>
-              <ul>${(data.ingredients || []).map(ing => `<li>${ing}</li>`).join('')}</ul>
+              <p><strong>Ingredients:</strong> ${(data.ingredients || []).join(', ')}</p>
             </div>
           `;
           document.getElementById("items").appendChild(div);
