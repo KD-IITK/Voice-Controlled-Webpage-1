@@ -1,23 +1,76 @@
-# main.py
-
 import asyncio
 import json
-# Add render_template to serve the HTML page
+import os
+import tempfile
+import traceback
+
 from flask import Flask, request, jsonify, render_template
 import ollama
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
 
+import speech_recognition as sr
+import pydub
+
 app = Flask(__name__)
 
-# This is the new route to serve your web page
 @app.route("/")
 def index():
     return render_template("index.html")
 
-# This is your existing chat API endpoint (no changes needed here)
+@app.route("/voice-to-text", methods=["POST"])
+def voice_to_text():
+    """
+    Receives audio file from browser, converts it to WAV,
+    then performs speech-to-text using Google's API.
+    """
+    try:
+        if 'audio' not in request.files:
+            return jsonify({"success": False, "error": "No audio file provided"}), 400
+        
+        audio_file = request.files['audio']
+        
+        if audio_file.filename == '':
+            return jsonify({"success": False, "error": "No audio file selected"}), 400
+        
+        # Convert audio to WAV using pydub
+        sound = pydub.AudioSegment.from_file(audio_file)
+        
+        with tempfile.NamedTemporaryFile(delete=False, suffix='.wav') as wav_file:
+            wav_filename = wav_file.name
+        
+        sound.export(wav_filename, format="wav")
+        
+        try:
+            recognizer = sr.Recognizer()
+            with sr.AudioFile(wav_filename) as source:
+                recognizer.adjust_for_ambient_noise(source, duration=0.5)
+                audio_data = recognizer.record(source)
+            
+            text = recognizer.recognize_google(audio_data)
+            
+            return jsonify({"success": True, "text": text})
+        
+        finally:
+            if os.path.exists(wav_filename):
+                os.unlink(wav_filename)
+
+    except Exception as e:
+        print("--- AN UNHANDLED ERROR OCCURRED ---")
+        traceback.print_exc()
+        print("---------------------------------")
+        return jsonify({
+            "success": False,
+            "error": "An unexpected server error occurred during audio processing."
+        }), 500
+
+
 @app.route("/chat", methods=["POST"])
 def chat_endpoint():
+    """
+    Receives a prompt JSON, sends it to Ollama + MCP tools,
+    returns the response or tool execution results.
+    """
     data = request.get_json()
     if not data or "prompt" not in data:
         return jsonify({"error": "A 'prompt' is required in the JSON body."}), 400
@@ -30,11 +83,8 @@ def chat_endpoint():
         
     return jsonify(result)
 
+
 async def handle_chat_request(prompt: str):
-    """
-    Handles a single chat request by spinning up an MCP client,
-    communicating with the LLM, and executing tool calls.
-    """
     server_params = StdioServerParameters(
         command="python",
         args=["server.py"],
@@ -89,8 +139,10 @@ async def handle_chat_request(prompt: str):
                     return {"status": "direct_response", "data": response['message']['content']}
 
     except Exception as e:
-        print(f"An error occurred during the request: {e}")
+        print(f"An error occurred during the chat request: {e}")
+        traceback.print_exc()
         return {"status": "error", "message": str(e)}
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
