@@ -114,7 +114,7 @@ async def handle_chat_request(prompt: str):
                     ollama_tools.append(ollama_tool)
 
                 response = ollama.chat(
-                    model="llama3.2:latest",
+                    model="qwen2.5:0.5b",
                     messages=[
                         {"role": "assistant", "content": "You are a food kiosk operator. Respond with what the user wants to do."},
                         {"role": "user", "content": prompt}
