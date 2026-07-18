@@ -8,8 +8,8 @@ class Config:
 
     # --- Speech-to-text ---
     # "whisper" -> local/offline transcription via openai-whisper
-    # "google"  -> online transcription via SpeechRecognition + Google API
-    STT_ENGINE = os.environ.get("STT_ENGINE", "google").lower()
+    # "google"  -> online transcription via SpeechRecognition
+    STT_ENGINE = os.environ.get("STT_ENGINE", "whisper").lower()
     WHISPER_MODEL_SIZE = os.environ.get("WHISPER_MODEL_SIZE", "base")
 
     # --- LLM / Ollama ---
