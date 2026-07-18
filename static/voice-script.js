@@ -1,4 +1,5 @@
 class VoiceKioskApp {
+
     constructor() {
         this.mediaRecorder = null;
         this.audioChunks = [];
