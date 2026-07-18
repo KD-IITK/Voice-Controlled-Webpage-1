@@ -1,6 +1,15 @@
+"""
+MCP tool server exposing the kiosk's shopping-cart operations.
+
+Run standalone for testing:
+    python app/mcp_tools/kiosk_server.py
+
+Normally this is launched as a subprocess by chat_service.handle_chat_request.
+"""
+
 from mcp.server.fastmcp import FastMCP
 
-mcp = FastMCP("test")
+mcp = FastMCP("kiosk-cart")
 
 @mcp.tool()
 def add_item_to_cart(name: str, quantity: int) -> dict:
